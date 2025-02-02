@@ -1,6 +1,7 @@
 package kasv.gunda.myexpense.models.requests;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
