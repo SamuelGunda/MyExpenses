@@ -10,6 +10,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * Global exception handler for handling various exceptions in the application.
+ * Catches and returns more user-friendly error messages.
+ */
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

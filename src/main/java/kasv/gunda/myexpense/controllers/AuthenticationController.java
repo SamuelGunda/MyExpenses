@@ -8,7 +8,6 @@ import kasv.gunda.myexpense.models.responses.LoginResponse;
 import kasv.gunda.myexpense.security.AuthenticationService;
 import kasv.gunda.myexpense.security.JwtService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,11 +36,9 @@ public class AuthenticationController {
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest request) {
         User authenticatedUser = authenticationService.authenticate(request);
 
-        String jwtToken = jwtService.generateToken((UserDetails) authenticatedUser);
+        String jwtToken = jwtService.generateToken(authenticatedUser);
 
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setToken(jwtToken);
-        loginResponse.setExpiresIn(jwtService.getExpirationTime());
+        LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
 
         return ResponseEntity.ok(loginResponse);
     }

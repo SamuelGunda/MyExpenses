@@ -15,6 +15,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+/**
+ * Security configuration class for setting up security filters and CORS configuration.
+ */
 
 @Configuration
 @EnableWebSecurity
@@ -34,6 +37,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
+                        // Allow access to /auth/** and /healthCheck/** endpoints without authentication
                         .requestMatchers("/auth/**", "/healthCheck/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -48,7 +52,8 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:8005"));
+        // Allow requests from frontend TODO: Change this to the frontend URL
+        configuration.setAllowedOrigins(List.of(""));
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
 
