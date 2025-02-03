@@ -53,7 +53,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Allow requests from frontend TODO: Change this to the frontend URL
-        configuration.setAllowedOrigins(List.of(""));
+        configuration.setAllowedOrigins(List.of());
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
 
