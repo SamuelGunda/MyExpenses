@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     ProblemDetail errorDetail = null;
-    @ExceptionHandler(EmailAlreadyTakenException.class)
-    public ProblemDetail handleEmailAlreadyTakenException(EmailAlreadyTakenException exception) {
-        errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(409), exception.getMessage());
-        errorDetail.setProperty("description", "The email address is already in use. Please use a different email address.");
+    @ExceptionHandler(ConflictException.class)
+    public ProblemDetail handleConflictException(ConflictException exception) {
+        ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(409), "Conflict occurred");
+        errorDetail.setProperty("description", exception.getMessage());
         return errorDetail;
     }
 

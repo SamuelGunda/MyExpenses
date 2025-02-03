@@ -1,6 +1,6 @@
 package kasv.gunda.myexpense.security;
 
-import kasv.gunda.myexpense.exceptions.EmailAlreadyTakenException;
+import kasv.gunda.myexpense.exceptions.ConflictException;
 import kasv.gunda.myexpense.models.dtos.UserDto;
 import kasv.gunda.myexpense.models.entities.User;
 import kasv.gunda.myexpense.models.requests.LoginRequest;
@@ -31,7 +31,7 @@ public class AuthenticationService {
 
     public UserDto signup(RegisterRequest input) {
         if (userRepository.findByEmail(input.getEmail()).isPresent()) {
-            throw new EmailAlreadyTakenException("The email address is already taken.");
+            throw new ConflictException("Email");
         }
 
         User user = new User();

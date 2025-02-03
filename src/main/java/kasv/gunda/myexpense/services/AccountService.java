@@ -1,6 +1,6 @@
 package kasv.gunda.myexpense.services;
 
-import kasv.gunda.myexpense.models.dtos.AccountDto;
+import kasv.gunda.myexpense.exceptions.ConflictException;
 import kasv.gunda.myexpense.models.entities.Account;
 import kasv.gunda.myexpense.models.requests.CreateAccountRequest;
 import kasv.gunda.myexpense.repositories.AccountRepository;
@@ -28,7 +28,7 @@ public class AccountService implements IAccountService {
         }
 
         if (user.getAccounts().stream().anyMatch(account -> account.getAccountName().equals(request.getAccountName()))) {
-            throw new RuntimeException("Account already exists");
+            throw new ConflictException("Account name");
         }
 
         var account = new Account();
