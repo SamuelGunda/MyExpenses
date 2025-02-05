@@ -16,12 +16,8 @@ import java.util.UUID;
 @Table(name = "accounts")
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
-    private Integer id;
-
-    @Column(unique = true, length = 36, nullable = false)
-    private UUID publicId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(length = 36, nullable = false)
     private String accountName;
@@ -38,11 +34,4 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     private Set<Transaction> transactions = new HashSet<>();
-
-    @PrePersist
-    protected void onCreate() {
-        if (publicId == null) {
-            publicId = UUID.randomUUID();
-        }
-    }
 }

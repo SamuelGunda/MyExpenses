@@ -18,15 +18,19 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+
 
     public AuthenticationService(
             UserRepository userRepository,
             AuthenticationManager authenticationManager,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            JwtService jwtService
     ) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public UserDto signup(RegisterRequest input) {
@@ -41,10 +45,10 @@ public class AuthenticationService {
 
         userRepository.save(user);
 
-        return new UserDto(user.getPublicId(), user.getEmail(), user.getFullName());
+        return new UserDto(user.getId(), user.getEmail(), user.getFullName());
     }
 
-    public User authenticate(LoginRequest input) {
+    public String authenticate(LoginRequest input) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         input.getEmail(),
@@ -52,7 +56,9 @@ public class AuthenticationService {
                 )
         );
 
-        return userRepository.findByEmail(input.getEmail())
-                .orElseThrow();
+        User authenticatedUser =  userRepository.findByEmail(input.getEmail())
+                                                .orElseThrow();
+
+        return jwtService.generateToken(authenticatedUser);
     }
 }

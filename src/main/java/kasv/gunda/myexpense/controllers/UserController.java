@@ -2,7 +2,6 @@ package kasv.gunda.myexpense.controllers;
 
 import kasv.gunda.myexpense.mappers.UserDtoMapper;
 import kasv.gunda.myexpense.models.dtos.UserDto;
-import kasv.gunda.myexpense.models.entities.User;
 import kasv.gunda.myexpense.services.IUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final IUserService userServices;
     private final UserDtoMapper dtoMapper;
@@ -20,9 +19,9 @@ public class UserController {
         this.dtoMapper = dtoMapper;
     }
 
-    @GetMapping("/{publicId}")
-    public ResponseEntity<UserDto> getUserByPublicId(@PathVariable String publicId) {
-        UserDto userDto = Optional.ofNullable(userServices.getUserByPublicId(publicId))
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable String id) {
+        UserDto userDto = Optional.ofNullable(userServices.getUserById(id))
                 .map(dtoMapper::toDto)
                 .orElse(null);
 

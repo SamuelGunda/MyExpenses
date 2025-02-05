@@ -19,12 +19,8 @@ import java.util.*;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
-    private Integer id;
-
-    @Column(unique = true, length = 36, nullable = false)
-    private UUID publicId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false)
     private String fullName;
@@ -45,13 +41,6 @@ public class User implements UserDetails {
 
     @ManyToMany(mappedBy = "users")
     private Set<Account> accounts = new HashSet<>();
-
-    @PrePersist
-    protected void onCreate() {
-        if (publicId == null) {
-            publicId = UUID.randomUUID();
-        }
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

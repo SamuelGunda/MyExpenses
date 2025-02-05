@@ -1,7 +1,7 @@
 package kasv.gunda.myexpense.controllers;
 
+import jakarta.validation.Valid;
 import kasv.gunda.myexpense.models.dtos.UserDto;
-import kasv.gunda.myexpense.models.entities.User;
 import kasv.gunda.myexpense.models.requests.LoginRequest;
 import kasv.gunda.myexpense.models.requests.RegisterRequest;
 import kasv.gunda.myexpense.models.responses.LoginResponse;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthenticationController {
     private final JwtService jwtService;
 
@@ -26,7 +26,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserDto> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<UserDto> register(@RequestBody @Valid RegisterRequest request) {
         UserDto registeredUser = authenticationService.signup(request);
 
         return ResponseEntity.ok(registeredUser);
@@ -34,9 +34,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest request) {
-        User authenticatedUser = authenticationService.authenticate(request);
-        //TODO: Move this to AuthenticationService
-        String jwtToken = jwtService.generateToken(authenticatedUser);
+        String jwtToken = authenticationService.authenticate(request);
 
         LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
 

@@ -1,5 +1,6 @@
 package kasv.gunda.myexpense.controllers;
 
+import jakarta.validation.Valid;
 import kasv.gunda.myexpense.mappers.AccountDtoMapper;
 import kasv.gunda.myexpense.models.dtos.AccountDto;
 import kasv.gunda.myexpense.models.entities.Account;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping("/api/accounts")
 public class AccountController {
 
     private final IAccountService accountServices;
@@ -24,7 +25,7 @@ public class AccountController {
     }
 
     @PostMapping()
-    public ResponseEntity<AccountDto> createAccount(@RequestBody CreateAccountRequest request) {
+    public ResponseEntity<AccountDto> createAccount(@Valid @RequestBody CreateAccountRequest request) {
         Account createdAccount = accountServices.createAccount(request);
         AccountDto createdAccountDto = accountDtoMapper.toDto(createdAccount);
 

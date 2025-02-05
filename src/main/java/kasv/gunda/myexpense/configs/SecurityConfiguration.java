@@ -38,7 +38,14 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         // Allow access to /auth/** and /healthCheck/** endpoints without authentication
-                        .requestMatchers("/auth/**", "/healthCheck/**").permitAll()
+                        .requestMatchers(
+                                "/api/auth/**",
+                                "/api/healthCheck/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        )
+                        .permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

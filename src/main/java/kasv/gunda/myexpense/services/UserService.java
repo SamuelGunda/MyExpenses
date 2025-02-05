@@ -14,8 +14,8 @@ public class UserService implements IUserService {
         this.userRepository = userRepository;
     }
 
-    public User getUserByPublicId(String publicId) {
-        return userRepository.findByPublicId(UUID.fromString(publicId))
+    public User getUserById(String id) {
+        return userRepository.findById(UUID.fromString(id))
                 .orElse(null);
     }
 

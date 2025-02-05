@@ -14,7 +14,7 @@ public class AccountDtoMapper {
 
     public AccountDto toDto(Account account) {
         return new AccountDto(
-                account.getPublicId(),
+                account.getId(),
                 account.getAccountName(),
                 account.getBalance(),
                 account.getUsers().stream().map(userDtoMapper::toDto).toList()
