@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class CreateAccountRequest {
-    @Size(max = 50)
+    @Size(min = 3, max = 50, message = "Account name must be between 3 and 50 characters long.")
     private String accountName;
     private double balance = 0.0;
 }
