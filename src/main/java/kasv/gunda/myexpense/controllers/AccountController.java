@@ -23,6 +23,14 @@ public class AccountController {
         this.accountDtoMapper = accountDtoMapper;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AccountDto> getAccount(@PathVariable String id) {
+        Account account = accountServices.getAccount(id);
+        AccountDto accountDto = accountDtoMapper.toDto(account);
+
+        return ResponseEntity.ok(accountDto);
+    }
+
     @PostMapping()
     public ResponseEntity<AccountDto> createAccount(@Valid @RequestBody CreateAccountRequest request) {
         Account createdAccount = accountServices.createAccount(request);
@@ -37,4 +45,5 @@ public class AccountController {
 
         return ResponseEntity.ok(test);
     }
+
 }

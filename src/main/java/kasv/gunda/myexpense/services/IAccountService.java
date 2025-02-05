@@ -6,6 +6,7 @@ import kasv.gunda.myexpense.models.requests.CreateAccountRequest;
 import kasv.gunda.myexpense.models.requests.TransactionRequest;
 
 public interface IAccountService {
+    Account getAccount(String id);
     Account createAccount(CreateAccountRequest request);
     Transaction transfer(String id, TransactionRequest request);
 }

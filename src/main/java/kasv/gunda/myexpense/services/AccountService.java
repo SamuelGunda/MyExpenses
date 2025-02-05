@@ -26,6 +26,13 @@ public class AccountService implements IAccountService {
         this.userService = userService;
     }
 
+    public Account getAccount(String id) {
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        return accountRepository
+                .findByIdAndUsersEmail(UUID.fromString(id), userEmail)
+                .orElseThrow(() -> new RuntimeException("Account not found or user not authorized"));
+    }
 
     public Account createAccount(CreateAccountRequest request) {
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -48,18 +55,7 @@ public class AccountService implements IAccountService {
     }
 
     public Transaction transfer(String id, TransactionRequest request) {
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        var user = userService.getUserByEmail(userEmail);
-
-        if (user == null) throw new RuntimeException("User not found");
-
-        var account = accountRepository
-                .findById(UUID.fromString(id))
-                .orElseThrow(() -> new RuntimeException("Account not found"));
-
-        if (account.getUsers().stream().noneMatch(u -> u.getId().equals(user.getId()))) {
-            throw new AccessDeniedException("Not authorized to access this account");
-        }
+        Account account = getAccount(id);
 
         var transaction = new Transaction();
         transaction.setTransactionName(request.getTransactionName());
