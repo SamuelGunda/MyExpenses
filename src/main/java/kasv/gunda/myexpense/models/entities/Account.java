@@ -1,8 +1,10 @@
 package kasv.gunda.myexpense.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -22,7 +24,8 @@ public class Account {
     @Column(length = 36, nullable = false)
     private String accountName;
 
-    private double balance;
+    private BigDecimal balance;
+
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -30,8 +33,10 @@ public class Account {
             joinColumns = { @JoinColumn(name = "account_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
+    @JsonManagedReference
     Set<User> users = new HashSet<>();
 
     @OneToMany(mappedBy = "account")
+    @JsonManagedReference
     private Set<Transaction> transactions = new HashSet<>();
 }

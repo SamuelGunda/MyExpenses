@@ -3,6 +3,7 @@ package kasv.gunda.myexpense.models.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +12,6 @@ import java.util.UUID;
 public class AccountDto {
     private UUID publicId;
     private String accountName;
-    private double balance;
+    private BigDecimal balance;
     private List<UserDto> users;
 }

@@ -4,13 +4,12 @@ import jakarta.validation.Valid;
 import kasv.gunda.myexpense.mappers.AccountDtoMapper;
 import kasv.gunda.myexpense.models.dtos.AccountDto;
 import kasv.gunda.myexpense.models.entities.Account;
+import kasv.gunda.myexpense.models.entities.Transaction;
 import kasv.gunda.myexpense.models.requests.CreateAccountRequest;
+import kasv.gunda.myexpense.models.requests.TransactionRequest;
 import kasv.gunda.myexpense.services.IAccountService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -30,5 +29,12 @@ public class AccountController {
         AccountDto createdAccountDto = accountDtoMapper.toDto(createdAccount);
 
         return ResponseEntity.ok(createdAccountDto);
+    }
+
+    @PostMapping("/{id}/transfer")
+    public ResponseEntity<Transaction> transfer(@PathVariable String id, @Valid @RequestBody TransactionRequest request) {
+        Transaction test = accountServices.transfer(id, request);
+
+        return ResponseEntity.ok(test);
     }
 }

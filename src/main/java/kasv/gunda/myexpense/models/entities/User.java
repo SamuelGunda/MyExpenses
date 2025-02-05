@@ -1,5 +1,6 @@
 package kasv.gunda.myexpense.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -40,6 +41,7 @@ public class User implements UserDetails {
     private Date updatedAt;
 
     @ManyToMany(mappedBy = "users")
+    @JsonBackReference
     private Set<Account> accounts = new HashSet<>();
 
     @Override
