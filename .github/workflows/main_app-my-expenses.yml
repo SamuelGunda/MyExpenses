@@ -15,17 +15,12 @@ jobs:
     permissions:
       contents: read
 
+    env:
+        spring_datasource_url: ${{ secrets.DB_URL }}"
+        spring_datasource_username: ${{ secrets.DB_USERNAME }}"
+        spring_datasource_password: ${{ secrets.DB_PASSWORD }}" 
+
     steps:
-      - name: Debug File Structure
-        run: ls -R
-
-      - name: Generate application.properties
-        run: |
-          mkdir -p src/main/resources
-          echo "spring.datasource.url=${{ secrets.DB_URL }}" > src/main/resources/application.properties
-          echo "spring.datasource.username=${{ secrets.DB_USERNAME }}" >> src/main/resources/application.properties
-          echo "spring.datasource.password=${{ secrets.DB_PASSWORD }}" >> src/main/resources/application.properties      
-
       - uses: actions/checkout@v4
 
       - name: Set up Java version
