@@ -13,11 +13,14 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class TransactionRequest {
+public class CreateTransactionRequest {
     @NotBlank
+    @Size(min = 3, max = 24, message = "Transaction name must be between 3 and 24 characters long.")
     private String transactionName;
-    @Size(min = 3, max = 100, message = "Description must be between 3 and 100 characters long.")
+    @Size(min = 3, max = 128, message = "Description must be between 3 and 100 characters long.")
     private String description;
+    @Size(min = 3, max = 36, message = "Transaction initiator name must be between 3 and 100 characters long.")
+    private String transactionInitiator;
 
     @NotNull(message = "Amount cannot be null")
     private BigDecimal amount;

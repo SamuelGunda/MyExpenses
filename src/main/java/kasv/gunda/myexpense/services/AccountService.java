@@ -9,7 +9,7 @@ import kasv.gunda.myexpense.exceptions.ConflictException;
 import kasv.gunda.myexpense.models.entities.Account;
 import kasv.gunda.myexpense.models.entities.Transaction;
 import kasv.gunda.myexpense.models.requests.CreateAccountRequest;
-import kasv.gunda.myexpense.models.requests.TransactionRequest;
+import kasv.gunda.myexpense.models.requests.CreateTransactionRequest;
 import kasv.gunda.myexpense.repositories.AccountRepository;
 import kasv.gunda.myexpense.repositories.TransactionRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -56,7 +56,7 @@ public class AccountService implements IAccountService {
     }
 
     @Transactional
-    public Transaction createTransaction(String id, TransactionRequest request) {
+    public Transaction createTransaction(String id, CreateTransactionRequest request) {
         Account account = getAccount(id);
 
         Transaction transaction = new Transaction();

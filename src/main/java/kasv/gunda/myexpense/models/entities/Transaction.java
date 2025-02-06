@@ -20,11 +20,13 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(length = 36, nullable = false)
+    @Column(length = 24, nullable = false)
     private String transactionName;
 
-    @Column(length = 36, nullable = false)
+    @Column(length = 128, nullable = false)
     private String description;
+    @Column(length = 36, nullable = false)
+    private String transactionInitiator;
     private BigDecimal amount;
 
     @Column(nullable = false)

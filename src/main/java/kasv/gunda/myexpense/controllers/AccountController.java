@@ -6,7 +6,7 @@ import kasv.gunda.myexpense.models.dtos.AccountDto;
 import kasv.gunda.myexpense.models.entities.Account;
 import kasv.gunda.myexpense.models.entities.Transaction;
 import kasv.gunda.myexpense.models.requests.CreateAccountRequest;
-import kasv.gunda.myexpense.models.requests.TransactionRequest;
+import kasv.gunda.myexpense.models.requests.CreateTransactionRequest;
 import kasv.gunda.myexpense.services.IAccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +39,8 @@ public class AccountController {
         return ResponseEntity.ok(createdAccountDto);
     }
 
-    @PostMapping("/{id}/transfer")
-    public ResponseEntity<Transaction> transfer(@PathVariable String id, @Valid @RequestBody TransactionRequest request) {
+    @PostMapping("/{id}/transactions")
+    public ResponseEntity<Transaction> createTransaction(@PathVariable String id, @Valid @RequestBody CreateTransactionRequest request) {
         Transaction transaction = accountServices.createTransaction(id, request);
 
         return ResponseEntity.ok(transaction);
