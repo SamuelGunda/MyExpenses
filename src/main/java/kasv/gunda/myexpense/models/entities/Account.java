@@ -1,6 +1,7 @@
 package kasv.gunda.myexpense.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,7 +37,7 @@ public class Account {
     @JsonManagedReference
     Set<User> users = new HashSet<>();
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Transaction> transactions = new HashSet<>();
 }
