@@ -2,6 +2,7 @@ package kasv.gunda.myexpense.controllers;
 
 import kasv.gunda.myexpense.mappers.UserDtoMapper;
 import kasv.gunda.myexpense.models.dtos.UserDto;
+import kasv.gunda.myexpense.models.entities.User;
 import kasv.gunda.myexpense.services.IUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,27 +22,24 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable String id) {
-        UserDto userDto = Optional.ofNullable(userServices.getUserById(id))
-                .map(dtoMapper::toDto)
-                .orElse(null);
-
-        if (userDto == null) {
-            return ResponseEntity.noContent().build();
-        }
+        User user = userServices.getUserById(id);
+        UserDto userDto = dtoMapper.toDto(user);
 
         return ResponseEntity.ok(userDto);
     }
 
     @GetMapping()
     public ResponseEntity<UserDto> getUserByEmail(@RequestParam String email) {
-        UserDto userDto = Optional.ofNullable(userServices.getUserByEmail(email))
-                .map(dtoMapper::toDto)
-                .orElse(null);
-
-        if (userDto == null) {
-            return ResponseEntity.noContent().build();
-        }
+        User user = userServices.getUserByEmail(email);
+        UserDto userDto = dtoMapper.toDto(user);
 
         return ResponseEntity.ok(userDto);
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<Void> deleteUser() {
+        userServices.deleteUser();
+
+        return ResponseEntity.noContent().build();
     }
 }

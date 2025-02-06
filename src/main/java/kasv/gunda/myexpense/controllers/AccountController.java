@@ -41,9 +41,9 @@ public class AccountController {
 
     @PostMapping("/{id}/transfer")
     public ResponseEntity<Transaction> transfer(@PathVariable String id, @Valid @RequestBody TransactionRequest request) {
-        Transaction test = accountServices.transfer(id, request);
+        Transaction transaction = accountServices.createTransaction(id, request);
 
-        return ResponseEntity.ok(test);
+        return ResponseEntity.ok(transaction);
     }
 
 }
